@@ -20,9 +20,6 @@ require('dotenv')
 
 start();
 
-// Mongo URI
-const mongoURI = 'mongodb://localhost:27017/audioplayer';
-
 async function start() {
     try {
         await mongoose.connect('mongodb://localhost:27017/audioplayer', {
@@ -53,34 +50,7 @@ async function start() {
     app.set('views', __dirname + '/views');
 
 
-    // Create mongo connection
-    const conn = mongoose.createConnection(mongoURI);
-
-    // Init gfs
-    let gfs;
-
-    conn.once('open', () => {
-        // Init stream
-        gfs = Grid(conn.db, mongoose.mongo);
-        gfs.collection('uploads');
-    });
-
-    // Create storage engine
-    const storage = new GridFsStorage({
-        url: mongoURI,
-        file: (req, file) => {
-            return new Promise((resolve, reject) => {
-                const filename = file.originalname;
-                const fileInfo = {
-                    filename: filename,
-                    bucketName: 'uploads'
-                };
-                resolve(fileInfo);
-            });
-        }
-    });
-
-    const upload = multer({ storage });
+    
 
     app.use(express.json());
     app.use(cors());
@@ -90,9 +60,7 @@ async function start() {
 
     app.get('/', (req, res) => res.render('index'));
 
-    app.post('/upload', upload.single('file'), (req, res) => {
-        res.redirect('/');
-      });
+    
 
     app.listen(3030, () => console.log('REST service started on port 3030'));
 }
