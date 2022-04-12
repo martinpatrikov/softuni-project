@@ -63,9 +63,7 @@ async function start() {
     app.use('/data/catalog', catalogController);
     app.use('/users', usersController);
 
-    app.get('/', (req, res) => res.render('index'));
-
-    console.log(await Item.findById('6255a9e997f2a0a4acc4c98f').populate('file'));
+    app.get('/', (req, res) => res.json({ message: 'REST service operational'}));
 
     app.listen(3030, () => console.log('REST service started on port 3030'));
 }

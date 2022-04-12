@@ -50,7 +50,7 @@ router.get('/', async (req, res) => {
 });
 
 
-router.post('/upload', upload.single('file'), (req, res) => {
+router.post('/', isAuth(), upload.single('file'), async (req, res) => {
 
     console.log(req.body);
     const item = {
@@ -58,10 +58,15 @@ router.post('/upload', upload.single('file'), (req, res) => {
         artist: req.body.artist,
         file: req.file.id
     };
-    api.create(item);
 
-    // console.log(req.file);
-    res.redirect('/');
+    try {
+        const result = await api.create(item);
+        res.status(201).json(result);
+    } catch (err) {
+        console.error(err.message);
+        const error = mapErrors(err);
+        res.status(400).json({ message: error });
+    }
 });
 
 // router.post('/', isAuth(), async (req, res) => {
