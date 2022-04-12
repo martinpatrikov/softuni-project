@@ -1,0 +1,71 @@
+<div class="container">
+    <form #f="ngForm" class="register action=" method="post" (ngSubmit)="register(f)" autocomplete="off">
+
+        <fieldset>
+            <h2>Register Form</h2>
+
+            <p class="field field-icon">
+                <label for="email">
+                    <span>
+                        <!-- <fa-icon [icon]="icons.faEnvelope"></fa-icon> -->
+                    </span>
+                </label>
+                <input #emailInput="ngModel" ngModel class="input-error" type="email" name="email" id="email"
+                    placeholder="john.doe@gmail.com" required email>
+            </p>
+
+            <ng-container *ngIf="emailInput.touched">
+                <!-- <p *ngIf="emailInput.errors?.required" class="error">
+            Email is required!
+          </p>
+          <p *ngIf="emailInput.errors?.invalidEmail" class="error">
+            Email is not valid!
+          </p> -->
+            </ng-container>
+
+            <p class="field field-icon">
+                <label for="password">
+                    <span>
+                        <!-- <fa-icon [icon]="icons.faLock"></fa-icon> -->
+                    </span>
+                </label>
+                <input #passwordInput="ngModel" ngModel type="password" name="password" id="password"
+                    placeholder="*****">
+            </p>
+            <ng-container *ngIf="passwordInput.touched">
+                <!-- <p *ngIf="passwordInput.errors?.required" class="error">
+            Password is required!
+          </p>
+          <p *ngIf="passwordInput.errors?.minlength" class="error">
+            Password must be at least 4 characters!
+          </p> -->
+            </ng-container>
+
+            <p class="field field-icon">
+                <label for="repeatPassword">
+                    <span>
+                        <!-- <fa-icon [icon]="icons.faLock"></fa-icon> -->
+                    </span>
+                </label>
+                <input #repeatPasswordInput="ngModel" ngModel type="password" name="repeatPassword" id="repeatPassword"
+                    placeholder="*****">
+            </p>
+            <ng-container *ngIf="repeatPasswordInput.touched">
+                <!-- <p *ngIf="passwordInput.errors?.required" class="error">
+            Password is required!
+          </p>
+          <p *ngIf="passwordInput.errors?.minlength" class="error">
+            Password must be at least 4 characters!
+          </p> -->
+            </ng-container>
+
+            <button>Register</button>
+
+            <p class="text-center">
+                Have an account?
+                <a routerLink="/user/login">Login</a>
+            </p>
+
+        </fieldset>
+    </form>
+</div>
