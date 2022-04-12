@@ -13,6 +13,7 @@ const cors = require('./middlewares/cors');
 const catalogController = require('./controllers/catalog');
 const usersController = require('./controllers/users');
 const auth = require('./middlewares/auth');
+const Item = require('./models/Item');
 
 require('dotenv')
     .config();
@@ -60,7 +61,7 @@ async function start() {
 
     app.get('/', (req, res) => res.render('index'));
 
-    
+    console.log(await Item.findById('6255a0fd7a0e112c30c16ad9').populate('file'));
 
     app.listen(3030, () => console.log('REST service started on port 3030'));
 }

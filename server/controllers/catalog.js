@@ -58,6 +58,7 @@ router.post('/upload', isAuth(), upload.single('file'), (req, res) => {
         file: req.file.id
     };
     api.create(item);
+
     // console.log(req.file);
     res.redirect('/');
 });
