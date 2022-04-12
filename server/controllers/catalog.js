@@ -50,7 +50,8 @@ router.get('/', async (req, res) => {
 });
 
 
-router.post('/upload', isAuth(), upload.single('file'), (req, res) => {
+router.post('/upload', upload.single('file'), (req, res) => {
+
     console.log(req.body);
     const item = {
         name: req.body.name,

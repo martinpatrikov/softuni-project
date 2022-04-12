@@ -33,6 +33,10 @@ async function start() {
         process.exit(1);
     }
 
+    mongoose.model('FileMeta', new mongoose.Schema({}, {
+        collection: 'uploads.files',
+    }));
+    const FilesMeta = mongoose.model('FileMeta');
     const app = express();
 
     //creating bucket
@@ -61,7 +65,7 @@ async function start() {
 
     app.get('/', (req, res) => res.render('index'));
 
-    console.log(await Item.findById('6255a0fd7a0e112c30c16ad9').populate('file'));
+    console.log(await Item.findById('6255a9e997f2a0a4acc4c98f').populate('file'));
 
     app.listen(3030, () => console.log('REST service started on port 3030'));
 }
