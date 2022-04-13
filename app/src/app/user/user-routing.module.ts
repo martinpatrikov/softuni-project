@@ -18,10 +18,10 @@ const routes: Routes = [
     path: 'register',
     component: RegisterComponent,
     // canActivate: [AuthActivate],
-    // data: {
-    //   authenticationRequired: false,
-    //   authenticationFailureRedirectUrl: '/',
-    // }
+    data: {
+      authenticationRequired: false,
+      authenticationFailureRedirectUrl: '/',
+    }
   }
 ];
 

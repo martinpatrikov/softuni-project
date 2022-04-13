@@ -8,6 +8,8 @@ import { MaterialModule } from './material.module';
 import { PlayerComponent } from './player/player.component';
 import { FormsModule } from '@angular/forms';
 import { CoreModule } from './core/core.module';
+import { SharedModule } from './shared/shared.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -20,9 +22,14 @@ import { CoreModule } from './core/core.module';
     BrowserAnimationsModule,
     MaterialModule,
     FormsModule,
-    CoreModule
+    CoreModule,
+    SharedModule,
+    HttpClientModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [
+    AppComponent,
+    
+  ]
 })
 export class AppModule { }
