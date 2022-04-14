@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AudioService } from "../core/services/audio.service";
+import { StreamState } from '../shared/interfaces/stream-state';
 
 @Component({
   selector: 'app-player',
@@ -7,12 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PlayerComponent implements OnInit {
 
+  filesI: Array<any> = [];
+  state: StreamState | undefined;
+  currentFile: any = {};
+
   files: Array<any> = [
     { name: "First Song", artist: "Inder" },
     { name: "Second Song", artist: "You" }
   ];
-  state: any;
-  currentFile: any = {};
 
   isFirstPlaying() {
     return false;
@@ -20,7 +24,7 @@ export class PlayerComponent implements OnInit {
   isLastPlaying() {
     return true;
   }
-  constructor() { }
+  constructor(public audioService: AudioService) { }
 
   ngOnInit(): void {
   }
