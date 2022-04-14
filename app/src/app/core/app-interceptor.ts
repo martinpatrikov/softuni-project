@@ -5,12 +5,14 @@ import { Observable, throwError } from "rxjs";
 import { catchError } from "rxjs/operators";
 
 import { environment } from '../../environments/environment';
+import { UserService } from "./services/user.service";
 const API_URL = environment.apiURL;
 
 @Injectable()
 export class AppInterceptor implements HttpInterceptor {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router,
+    private userService: UserService) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     let reqStream$ = next.handle(req);
@@ -18,16 +20,16 @@ export class AppInterceptor implements HttpInterceptor {
     if (req.url.startsWith('/api')) {
       reqStream$ = next.handle(req.clone({
         url: req.url.replace('/api/', API_URL),
-        withCredentials: true
+        headers: req.headers.set('x-authorization', this.userService.getJwtToken() || ''),
       }));
-    }
+  }
 
     return reqStream$.pipe(
-      catchError((err) => {
-        this.router.navigate(['/error'], { queryParams: { error: err.message } });
-        return throwError(err);
-      })
-    );
+    catchError((err) => {
+      this.router.navigate(['/error'], { queryParams: { error: err.error.message } });
+      return throwError(err);
+    })
+  );
   }
 
 }

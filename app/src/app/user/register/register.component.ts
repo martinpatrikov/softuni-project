@@ -26,7 +26,7 @@ export class RegisterComponent implements OnInit {
     if (form.invalid) { return; }
     const { email, password } = form.value;
     this.userService.register({ email, password }).subscribe({
-      next: () => {
+      next: (val) => {
         const redirectUrl = this.activatedRoute.snapshot.queryParams['redirectUrl'] || '/';
         this.router.navigate([redirectUrl]);
       },

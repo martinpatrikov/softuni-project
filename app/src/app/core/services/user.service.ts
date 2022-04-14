@@ -11,7 +11,7 @@ export class UserService {
   jwt: IJWT | null | undefined = undefined;
 
   get isLogged(): boolean {
-    return !!this.jwt;
+    return !!this.getJwtToken();
   }
 
   constructor(
@@ -20,19 +20,30 @@ export class UserService {
 
   login(data: { email: string; password: string }) {
     return this.http.post<IJWT>(`/api/users/login`, data).pipe(
-      tap((jwt) => this.jwt = jwt)
+      tap(jwt => this.setJwtToken(jwt))
     );
   }
 
   register(data: { email: string; password: string }) {
     return this.http.post<IJWT>(`/api/users/register`, data).pipe(
-      tap((jwt) => { this.jwt = jwt; console.log(jwt) })
+      tap(jwt => this.setJwtToken(jwt))
     );
   }
 
   logout() {
-    return this.http.post<IJWT>(`/api/users/logout`, {}).pipe(
-      tap(() => this.jwt = null)
+    return this.http.get<IJWT>(`/api/users/logout`, {}).pipe(
+      tap(() => this.setJwtToken({ accessToken: '', email: '', _id: '' }))
     );
   }
+
+  getJwtToken() {
+    return sessionStorage.getItem('jwt');
+  }
+
+  setJwtToken(token: IJWT) {
+    sessionStorage.setItem('jwt', token.accessToken);
+    sessionStorage.setItem('email', JSON.stringify(token.email));
+    sessionStorage.setItem('_id', JSON.stringify(token._id));
+  }
+
 }
