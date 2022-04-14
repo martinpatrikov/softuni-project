@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AudioService } from "../core/services/audio.service";
+import { FileService } from '../core/services/file.service';
 import { StreamState } from '../shared/interfaces/stream-state';
 
 @Component({
@@ -7,16 +8,11 @@ import { StreamState } from '../shared/interfaces/stream-state';
   templateUrl: './player.component.html',
   styleUrls: ['./player.component.scss']
 })
-export class PlayerComponent implements OnInit {
+export class PlayerComponent {
 
-  filesI: Array<any> = [];
+  files: Array<any> = [];
   state: StreamState | undefined;
   currentFile: any = {};
-
-  files: Array<any> = [
-    { name: "First Song", artist: "Inder" },
-    { name: "Second Song", artist: "You" }
-  ];
 
   isFirstPlaying() {
     return false;
@@ -24,16 +20,34 @@ export class PlayerComponent implements OnInit {
   isLastPlaying() {
     return true;
   }
-  constructor(public audioService: AudioService) { }
-
-  ngOnInit(): void {
+  constructor(
+    private audioService: AudioService,
+    private fileService: FileService
+  ) {
+    this.fileService.getFiles().subscribe((files: any) => { this.files = files; });
   }
 
-  openFile(a: any, b: any): void{}
-  onSliderChangeEnd(a: any): void{}
-  previous(): void{}  
-  play(): void{}
-  pause(): void{}
-  next(): void{}
+
+  // this.fileService.getFiles().subscribe((files: any) => {
+  //   this.filesI = files;
+  // });
+
+  openFile(file: any, index: any) {
+    this.currentFile = { index };
+    this.fileService.getFileByID(file._id).subscribe((file: any) => {this.currentFile.file = file});
+    this.audioService.stop();
+    this.playStream(file.url);
+  }
+  onSliderChangeEnd(a: any): void { }
+  previous(): void { }
+  play(): void { }
+  pause(): void { }
+  next(): void { }
+
+  playStream(url: any) {
+    this.audioService.playStream(url).subscribe((events: any) => {
+      // listening for fun here
+    });
+  }
 
 }
