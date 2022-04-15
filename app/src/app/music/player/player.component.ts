@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { AudioService } from "../core/services/audio.service";
-import { FileService } from '../core/services/file.service';
-import { StreamState } from '../shared/interfaces/stream-state';
+import { AudioService } from "../../core/services/audio.service";
+import { FileService } from '../../core/services/file.service';
+import { StreamState } from '../../shared/interfaces/stream-state';
 
 @Component({
   selector: 'app-player',

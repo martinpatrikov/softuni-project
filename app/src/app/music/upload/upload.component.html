@@ -1,0 +1,34 @@
+<div class="container">
+    <div class="new-theme-border">
+      <div class="header-background">
+        <span>New Song</span>
+      </div>
+      <form #form="ngForm" method="post" (ngSubmit)="uploadSong(form)">
+        <div class="new-theme-title">
+          <label for="themeName">Title: </label>
+          <input #nameInput="ngModel" ngModel type="text" name="songName" id="themeName" required minlength="5">
+          <ng-container *ngIf="nameInput.touched">
+            <p class="error" *ngIf="nameInput.errors?.required">
+                Theme name is required.
+              </p>
+              <p class="error" *ngIf="nameInput.errors?.minlength">
+                Theme name must be at least 5 characters long.
+              </p>
+        </ng-container>
+          
+        </div>
+        <div class="new-theme-content">
+          <label for="postText">Post: </label>
+          <input #fileInput="ngModel" ngModel type="file" id="myFile" name="file" accept="audio/*" required>
+          <p class="error" *ngIf="fileInput.touched && nameInput.errors?.required">
+            The file upload is required.
+          </p>
+        </div>
+        <div class="new-theme-buttons">
+          <button type="button" routerLink="/" class="cancel">Cancel</button>
+          <button class="public">Post</button>
+        </div>
+  
+      </form>
+    </div>
+  </div>

@@ -108,7 +108,7 @@ router.get('/:id', async (req, res) => {
         bucketName: 'FileMeta'
     });
     console.log('file = ' + file.filename)
-    bucket.openDownloadStreamByName(file.filename).pipe(fs.createWriteStream('../uploads/' + item.file.filename));
+    // bucket.openDownloadStreamByName(file.filename).pipe(fs.createWriteStream('../uploads/' + item.file.filename));
 
     // const result = await bucket.find({ filename: item.file.filename }).toArray((err, files) => {
     //     if (!files[0] || files.length == 0) {
