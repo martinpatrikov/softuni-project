@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { UserService } from 'src/app/core/services/user.service';
 import { AudioService } from "../../core/services/audio.service";
@@ -25,9 +25,10 @@ export class PlayerComponent {
   constructor(
     private audioService: AudioService,
     private fileService: FileService,
-    private userService: UserService
+    private userService: UserService,
+    private cdr: ChangeDetectorRef
   ) {
-    this.fileService.getFiles().subscribe((files: any) => { this.files = files; });
+    this.fileService.getFiles().subscribe((files: any) => { this.files = files; console.log(files) });
   }
 
 
@@ -56,11 +57,9 @@ export class PlayerComponent {
 
   addToPlaylist(id: any): void{
     this.userService.addToPlaylist(id).subscribe((res: any) => {
+      this.cdr.markForCheck();
       console.log(res);
     });
-  }
-  isInPlaylist(id: any): Observable<boolean>{
-    return this.userService.inPlaylist(id);
   }
 
 }

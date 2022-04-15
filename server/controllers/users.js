@@ -47,7 +47,6 @@ router.post('/inPlaylist', auth(), async (req, res) => {
     const user = await User.findById(req.user._id);
     
     return user.playlist.includes(req.body._id);
-    // console.log(req.body);
 });
 
 module.exports = router;

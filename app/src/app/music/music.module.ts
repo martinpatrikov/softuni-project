@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
 import { FileUploadModule } from 'ng2-file-upload';
+import { CoreModule } from '../core/core.module';
 
 
 
@@ -12,7 +13,8 @@ import { FileUploadModule } from 'ng2-file-upload';
     CommonModule,
     FormsModule,
     ToastrModule,
-    FileUploadModule
+    FileUploadModule,
+    CoreModule
   ]
 })
 export class MusicModule { }

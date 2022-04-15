@@ -9,13 +9,14 @@ export class FileService {
 
   constructor(private http: HttpClient) { }
 
-  getFiles(): Observable<any>{
+  getFiles(): Observable<any> {
     return this.http.get<any>('/api/data/catalog');
+
   }
-  getFileByID(id: string): Observable<any>{
+  getFileByID(id: string): Observable<any> {
     return this.http.get<any>(`/api/data/catalog/${id}`);
   }
-  uploadFile(formData: any): Observable<any>{
+  uploadFile(formData: any): Observable<any> {
     return this.http.post<any>('/api/data/catalog', formData);
   }
 }

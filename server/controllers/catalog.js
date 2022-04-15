@@ -19,6 +19,7 @@ const fs = require('fs');
 const {
     FilesMeta
 } = require('../models/Item');
+const User = require('../models/User');
 
 // Mongo URI
 const mongoURI = 'mongodb://localhost:27017/audioplayer';
@@ -54,8 +55,12 @@ const upload = multer({
 });
 
 router.get('/', async (req, res) => {
-    console.log(req.user);
-    const data = await api.getAll();
+    // console.log(req.user);
+    let data = await api.getAll();
+    const user = await User.findById(req.user._id);
+    // data = data.map(item => Object.assign({}, item, {isAdded: user.playlist.includes(item._id)}));
+    data = data.map(item => ({ file: item.file, artist: item.artist, name: item.name, _id: item._id, isAdded: user.playlist.includes(item._id) }));
+
     res.json(data);
 });
 
