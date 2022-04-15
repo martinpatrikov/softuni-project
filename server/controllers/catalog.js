@@ -62,7 +62,7 @@ router.get('/', async (req, res) => {
 
 router.post('/', isAuth(), upload.single('file'), async (req, res) => {
     // TODO The file is not received in the right format
-    console.log('hjere')
+    // console.log('hjere')
     // console.log(rseq);
     const item = {
         name: req.body.name,
@@ -85,31 +85,20 @@ router.post('/', isAuth(), upload.single('file'), async (req, res) => {
 router.get('/:id', async (req, res) => {
     const id = req.params.id;
     const item = await Item.findById(id).populate('file');
-    const file = await FilesMeta.findById(item.file._id)
+    const file = await FilesMeta.findById(item.file._id);
 
     const db = mongoose.connection;
     let bucket;
     bucket = new mongoose.mongo.GridFSBucket(db, {
-        bucketName: 'FileMeta'
+        bucketName: 'uploads'
     });
-    console.log('file = ' + file.filename)
-    // bucket.openDownloadStreamByName(file.filename).pipe(fs.createWriteStream('../uploads/' + item.file.filename));
+    console.log('file = ' + file._doc.filename);
 
-    // const result = await bucket.find({ filename: item.file.filename }).toArray((err, files) => {
-    //     if (!files[0] || files.length == 0) {
-    //         console.log('no file');
-    //         return res.status(200).json({
-    //             success: false,
-    //             message: '  File not found'
-    //         });
-    //     }
-    //     bucket.openDownloadStream(files[0]._id).pipe(res);
-    //     console.log(res)
-    //     res.json(result);
-    // });
-    // const item = res.locals.item;
-    // console.log(result);
-
+    try {
+        bucket.openDownloadStream(mongoose.Types.ObjectId(file._doc._id)).pipe(res);
+    } catch (err) {
+        console.error(err);
+    }
 });
 
 router.delete('/:id', preload(), isOwner(), async (req, res) => {

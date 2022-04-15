@@ -60,7 +60,6 @@ export class PlayerComponent {
     });
   }
   isInPlaylist(id: any): Observable<boolean>{
-    console.log(' here')
     return this.userService.inPlaylist(id);
   }
 
