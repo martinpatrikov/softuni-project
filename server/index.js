@@ -46,7 +46,7 @@ async function start() {
         bucket = new mongoose.mongo.GridFSBucket(db, {
             bucketName: 'newBucket'
         });
-        console.log(bucket);
+        console.log('bucket created');
     });
 
     app.use(bodyParser.json());

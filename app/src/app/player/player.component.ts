@@ -34,7 +34,8 @@ export class PlayerComponent {
 
   openFile(file: any, index: any) {
     this.currentFile = { index };
-    this.fileService.getFileByID(file._id).subscribe((file: any) => {this.currentFile.file = file});
+    this.fileService.getFileByID(file._id).subscribe((file: any) => {console.log(file); this.currentFile.file = file});
+    console.log(this.currentFile);
     this.audioService.stop();
     this.playStream(file.url);
   }

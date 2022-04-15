@@ -5,6 +5,8 @@ import { MaterialModule } from '../material.module';
 import { AppRoutingModule } from '../app-routing.module';
 import { UserService } from './services/user.service';
 import { appInterceptorProvider } from './app-interceptor';
+import { FileService } from './services/file.service';
+import { AudioService } from './services/audio.service';
 
 
 
@@ -22,7 +24,9 @@ import { appInterceptorProvider } from './app-interceptor';
   ],
   providers: [
     UserService,
-    appInterceptorProvider
+    appInterceptorProvider,
+    FileService,
+    AudioService
   ]
 })
 export class CoreModule { }

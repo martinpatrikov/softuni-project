@@ -22,8 +22,11 @@ let gfs;
 
 conn.once('open', () => {
     // Init stream
-    gfs = Grid(conn.db, mongoose.mongo);
-    gfs.collection('uploads');
+    // gfs = Grid(conn.db, mongoose.mongo);
+    // gfs.collection('uploads');
+    gfs = new mongoose.mongo.GridFSBucket(mongoURI, {
+        bucketName: 'uploads'
+    });
 });
 
 // Create storage engine
@@ -91,31 +94,34 @@ router.post('/', isAuth(), upload.single('file'), async (req, res) => {
 //     }
 // });
 
-router.get('/:id', preload(), (req, res) => {
-    const item = res.locals.item;
-    res.json(item);
-});
+// let bucket;
+// mongoose.connection.on('connected', () => {
+//     var db = mongoose.connections[0].db;
+//     bucket = new mongoose.mongo.GridFSBucket(db, {
+//         bucketName: 'newBucket'
+//     });
+//     console.log(bucket );
+// });
 
-router.put('/:id', preload(), isOwner(), async (req, res) => {
-    const itemId = req.params.id;
-    const item = {
-        make: req.body.make,
-        model: req.body.model,
-        year: req.body.year,
-        description: req.body.description,
-        price: req.body.price,
-        img: req.body.img,
-        material: req.body.material
-    };
-
-    try {
-        const result = await api.update(itemId, item);
+router.get('/:id', async (req, res) => {
+    const id = req.params.id;
+    const item = await Item.findById(id).populate('file');
+    // console.log(item)
+    const result = await gfs.find({_id: item.file._id}).toArray((err, files) => {
+        if (!files[0] || files.length == 0){
+            console.log('no file');
+            return res.status(200).json({
+                success: false,
+                message: '  File not found'
+            });
+        } 
+        gfs.openDownloadStream(files[0]._id).pipe(res);
+        console.log(res)
         res.json(result);
-    } catch (err) {
-        console.error(err.message);
-        const error = mapErrors(err);
-        res.status(400).json({ message: error });
-    }
+    });
+    // const item = res.locals.item;
+    console.log(result);
+    
 });
 
 router.delete('/:id', preload(), isOwner(), async (req, res) => {
