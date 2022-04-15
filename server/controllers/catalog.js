@@ -25,9 +25,6 @@ conn.once('open', () => {
     // Init stream
     gfs = Grid(conn.db, mongoose.mongo);
     gfs.collection('uploads');
-    // gfs = new mongoose.mongo.GridFSBucket(mongoURI, {
-    //     bucketName: 'uploads'
-    // });
 });
 
 // Create storage engine
@@ -55,8 +52,9 @@ router.get('/', async (req, res) => {
 
 
 router.post('/', isAuth(), upload.single('file'), async (req, res) => {
-
-    console.log(req.body);
+    // TODO The file is not received in the right format
+    console.log('hjere')
+    console.log(req);
     const item = {
         name: req.body.name,
         artist: req.body.artist,

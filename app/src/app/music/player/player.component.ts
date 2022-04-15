@@ -51,4 +51,8 @@ export class PlayerComponent {
     });
   }
 
+  addToPlaylist(id: any): void{
+    
+  }
+
 }

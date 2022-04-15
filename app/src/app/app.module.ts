@@ -14,6 +14,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ErrorComponent } from './error/error.component';
 import { UploadComponent } from './music/upload/upload.component';
 import { MusicModule } from './music/music.module';
+import { ToastrModule } from 'ngx-toastr';
+import { FileUploadModule } from 'ng2-file-upload';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,9 @@ import { MusicModule } from './music/music.module';
     SharedModule,
     HttpClientModule,
     FontAwesomeModule,
-    MusicModule
+    MusicModule,
+    ToastrModule.forRoot(),
+    FileUploadModule
   ],
   providers: [],
   bootstrap: [
