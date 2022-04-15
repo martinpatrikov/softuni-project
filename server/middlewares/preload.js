@@ -4,9 +4,6 @@ const { getById } = require('../services/furniture');
 module.exports = () => async (req, res, next) => {
     const id = req.params.id;
     try {
-        // TODO
-        // next();
-        // return;
         const item = await getById(id);
         // item._ownerId = item.owner;
         res.locals.item = item;

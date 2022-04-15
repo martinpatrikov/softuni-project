@@ -1,9 +1,11 @@
+const { ObjectId } = require('mongodb');
 const { model, Schema } = require('mongoose');
 
 
 const userSchema = new Schema({
     email: { type: String, required: [true, 'Email is required'] },
     hashedPassword: { type: String, required: true },
+    playlist: { type: [ObjectId], ref: 'Item' },
 });
 
 

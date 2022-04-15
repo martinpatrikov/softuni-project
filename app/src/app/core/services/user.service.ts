@@ -46,4 +46,8 @@ export class UserService {
     sessionStorage.setItem('_id', JSON.stringify(token._id));
   }
 
+  
+  addToPlaylist(_id: string){
+    return this.http.post<any>(`/api/users/playlist`, {_id, user: sessionStorage.getItem('_id')});
+  }
 }

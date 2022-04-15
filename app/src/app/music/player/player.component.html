@@ -6,8 +6,8 @@
       </div>
       <mat-list color="primary">
         <h3 mat-subheader>Songs</h3>
-        <mat-list-item *ngFor="let file of files; let i = index" (click)="openFile(file, i)">
-          <mat-icon color="primary" mat-list-icon>music_note</mat-icon>
+        <mat-list-item *ngFor="let file of files; let i = index" >
+          <mat-icon color="primary" mat-list-icon (click)="openFile(file, i)">music_note</mat-icon>
           <h4 mat-line>{{ file.name }}</h4>
           <h5 mat-line>by {{ file.artist }}</h5>
           <button class="playlistBut" (click)="addToPlaylist(file._id)">Add To Playlist</button>

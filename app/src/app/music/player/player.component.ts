@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { UserService } from 'src/app/core/services/user.service';
 import { AudioService } from "../../core/services/audio.service";
 import { FileService } from '../../core/services/file.service';
 import { StreamState } from '../../shared/interfaces/stream-state';
@@ -22,7 +23,8 @@ export class PlayerComponent {
   }
   constructor(
     private audioService: AudioService,
-    private fileService: FileService
+    private fileService: FileService,
+    private userService: UserService
   ) {
     this.fileService.getFiles().subscribe((files: any) => { this.files = files; });
   }
@@ -52,7 +54,9 @@ export class PlayerComponent {
   }
 
   addToPlaylist(id: any): void{
-    
+    this.userService.addToPlaylist(id).subscribe((res: any) => {
+      console.log(res);
+    });
   }
 
 }

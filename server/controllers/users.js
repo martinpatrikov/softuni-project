@@ -1,5 +1,7 @@
 const router = require('express').Router();
+const auth = require('../middlewares/auth');
 const { isGuest } = require('../middlewares/guards');
+const User = require('../models/User');
 const { register, login, logout } = require('../services/users');
 const mapErrors = require('../utils/mapper');
 
@@ -33,6 +35,13 @@ router.post('/login', isGuest(), async (req, res) => {
 router.get('/logout', (req, res) => {
     logout(req.user?.token);
     res.status(204).end();
+});
+
+router.post('/playlist', auth(), async (req, res) => {
+    const user = await User.findById(req.user._id);
+    user.playlist = req.body._id;
+    await user.save();
+    // console.log(req.body);
 });
 
 module.exports = router;
