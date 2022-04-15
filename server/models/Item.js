@@ -1,3 +1,4 @@
+const { default: mongoose } = require('mongoose');
 const { model, Schema, Types: { ObjectId } } = require('mongoose');
 
 const schema = new Schema({
@@ -8,4 +9,10 @@ const schema = new Schema({
 
 const Item = model('Item', schema);
 
-module.exports = Item;
+mongoose.model('FileMeta', new mongoose.Schema({}, {
+    collection: 'uploads.files',
+}));
+
+const FilesMeta = mongoose.model('FileMeta');
+
+module.exports = {Item, FilesMeta};

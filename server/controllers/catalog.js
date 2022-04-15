@@ -4,13 +4,14 @@ const { isAuth, isOwner } = require('../middlewares/guards');
 const mapErrors = require('../utils/mapper');
 const preload = require('../middlewares/preload');
 const mongoose = require('mongoose');
-const Item = require('../models/Item');
+const {Item }= require('../models/Item');
 const multer = require('multer');
 const {
     GridFsStorage
 } = require('multer-gridfs-storage');
 const Grid = require('gridfs-stream');
-
+const fs = require('fs');
+const { FilesMeta } = require('../models/Item');
 
 // Mongo URI
 const mongoURI = 'mongodb://localhost:27017/audioplayer';
@@ -22,11 +23,11 @@ let gfs;
 
 conn.once('open', () => {
     // Init stream
-    // gfs = Grid(conn.db, mongoose.mongo);
-    // gfs.collection('uploads');
-    gfs = new mongoose.mongo.GridFSBucket(mongoURI, {
-        bucketName: 'uploads'
-    });
+    gfs = Grid(conn.db, mongoose.mongo);
+    gfs.collection('uploads');
+    // gfs = new mongoose.mongo.GridFSBucket(mongoURI, {
+    //     bucketName: 'uploads'
+    // });
 });
 
 // Create storage engine
@@ -94,34 +95,36 @@ router.post('/', isAuth(), upload.single('file'), async (req, res) => {
 //     }
 // });
 
-// let bucket;
-// mongoose.connection.on('connected', () => {
-//     var db = mongoose.connections[0].db;
-//     bucket = new mongoose.mongo.GridFSBucket(db, {
-//         bucketName: 'newBucket'
-//     });
-//     console.log(bucket );
-// });
+
 
 router.get('/:id', async (req, res) => {
     const id = req.params.id;
     const item = await Item.findById(id).populate('file');
-    // console.log(item)
-    const result = await gfs.find({_id: item.file._id}).toArray((err, files) => {
-        if (!files[0] || files.length == 0){
-            console.log('no file');
-            return res.status(200).json({
-                success: false,
-                message: '  File not found'
-            });
-        } 
-        gfs.openDownloadStream(files[0]._id).pipe(res);
-        console.log(res)
-        res.json(result);
+    const file = await FilesMeta.findById(item.file._id)
+
+    const db = mongoose.connection;
+    let bucket;
+    bucket = new mongoose.mongo.GridFSBucket(db, {
+        bucketName: 'FileMeta'
     });
+    console.log('file = ' + file.filename)
+    bucket.openDownloadStreamByName(file.filename).pipe(fs.createWriteStream('../uploads/' + item.file.filename));
+
+    // const result = await bucket.find({ filename: item.file.filename }).toArray((err, files) => {
+    //     if (!files[0] || files.length == 0) {
+    //         console.log('no file');
+    //         return res.status(200).json({
+    //             success: false,
+    //             message: '  File not found'
+    //         });
+    //     }
+    //     bucket.openDownloadStream(files[0]._id).pipe(res);
+    //     console.log(res)
+    //     res.json(result);
+    // });
     // const item = res.locals.item;
-    console.log(result);
-    
+    // console.log(result);
+
 });
 
 router.delete('/:id', preload(), isOwner(), async (req, res) => {

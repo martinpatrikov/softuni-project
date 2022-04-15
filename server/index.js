@@ -13,13 +13,14 @@ const cors = require('./middlewares/cors');
 const catalogController = require('./controllers/catalog');
 const usersController = require('./controllers/users');
 const auth = require('./middlewares/auth');
-const Item = require('./models/Item');
+const {Item} = require('./models/Item');
 
 require('dotenv')
     .config();
 
 
 start();
+
 
 async function start() {
     try {
@@ -33,21 +34,14 @@ async function start() {
         process.exit(1);
     }
 
-    mongoose.model('FileMeta', new mongoose.Schema({}, {
-        collection: 'uploads.files',
-    }));
-    const FilesMeta = mongoose.model('FileMeta');
+    // mongoose.model('FileMeta', new mongoose.Schema({}, {
+    //     collection: 'uploads.files',
+    // }));
+    
     const app = express();
 
     //creating bucket
-    let bucket;
-    mongoose.connection.on('connected', () => {
-        var db = mongoose.connections[0].db;
-        bucket = new mongoose.mongo.GridFSBucket(db, {
-            bucketName: 'newBucket'
-        });
-        console.log('bucket created');
-    });
+    
 
     app.use(bodyParser.json());
     app.use(methodOverride('_method'));
@@ -66,4 +60,12 @@ async function start() {
     app.get('/', (req, res) => res.json({ message: 'REST service operational'}));
 
     app.listen(3030, () => console.log('REST service started on port 3030'));
+    let bucket;
+    mongoose.connection.on('connected', () => {
+        var db = mongoose.connections[0].db;
+        bucket = new mongoose.mongo.GridFSBucket(db, {
+            bucketName: 'newBucket'
+        });
+        console.log('bucket created');
+    });
 }
