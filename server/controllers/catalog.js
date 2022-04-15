@@ -73,30 +73,6 @@ router.post('/', isAuth(), upload.single('file'), async (req, res) => {
     }
 });
 
-// router.post('/', isAuth(), async (req, res) => {
-//     const item = {
-//         make: req.body.make,
-//         model: req.body.model,
-//         year: req.body.year,
-//         description: req.body.description,
-//         price: req.body.price,
-//         img: req.body.img,
-//         material: req.body.material,
-//         owner: req.user._id
-//     };
-
-//     try {
-//         const result = await api.create(item);
-//         res.status(201).json(result);
-//     } catch (err) {
-//         console.error(err.message);
-//         const error = mapErrors(err);
-//         res.status(400).json({ message: error });
-//     }
-// });
-
-
-
 router.get('/:id', async (req, res) => {
     const id = req.params.id;
     const item = await Item.findById(id).populate('file');

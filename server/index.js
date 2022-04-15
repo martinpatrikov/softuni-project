@@ -33,6 +33,15 @@ async function start() {
         console.error('Database connection failed');
         process.exit(1);
     }
+    
+    let bucket;
+    mongoose.connection.on('connected', () => {
+        var db = mongoose.connections[0].db;
+        bucket = new mongoose.mongo.GridFSBucket(db, {
+            bucketName: 'newBucket'
+        });
+        console.log('bucket created');
+    });
 
     // mongoose.model('FileMeta', new mongoose.Schema({}, {
     //     collection: 'uploads.files',
@@ -60,12 +69,5 @@ async function start() {
     app.get('/', (req, res) => res.json({ message: 'REST service operational'}));
 
     app.listen(3030, () => console.log('REST service started on port 3030'));
-    let bucket;
-    mongoose.connection.on('connected', () => {
-        var db = mongoose.connections[0].db;
-        bucket = new mongoose.mongo.GridFSBucket(db, {
-            bucketName: 'newBucket'
-        });
-        console.log('bucket created');
-    });
+    
 }

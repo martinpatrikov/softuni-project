@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FileService } from 'src/app/core/services/file.service';
 
 @Component({
@@ -10,13 +10,23 @@ import { FileService } from 'src/app/core/services/file.service';
 })
 export class UploadComponent implements OnInit {
 
-  constructor(private fileService: FileService, private router: Router) { }
+  constructor(private fileService: FileService, private router: Router, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
   }
 
   uploadSong(form: NgForm): void {
     if (form.invalid) { return; }
+    const { name, artist, file } = form.value;
+    this.fileService.uploadFile({ name, artist, file }).subscribe({
+      next: (val) => {
+        const redirectUrl = this.activatedRoute.snapshot.queryParams['redirectUrl'] || '/';
+        this.router.navigate([redirectUrl]);
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    });
     // this.fileService.saveTheme(form.value).subscribe({
     //   next: () => {
     //     this.router.navigate(['/themes']);

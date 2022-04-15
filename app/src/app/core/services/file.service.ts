@@ -15,4 +15,7 @@ export class FileService {
   getFileByID(id: string): Observable<any>{
     return this.http.get<any>(`/api/data/catalog/${id}`);
   }
+  uploadFile(file: any): Observable<any>{
+    return this.http.post<any>('/api/data/catalog', file);
+  }
 }
