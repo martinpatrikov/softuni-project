@@ -3,7 +3,7 @@
         <div class="header-background">
             <span>New Song</span>
         </div>
-        <form #form="ngForm" method="post" enctype='multipart/form-data' (ngSubmit)="uploader.uploadAll()">
+        <form #form="ngForm" method="post" enctype='multipart/form-data' (ngSubmit)="uploadSong(form)">
             <div class="new-theme-title">
                 <label for="themeName">Song Name: </label>
                 <input #nameInput="ngModel" ngModel type="text" name="name" id="name" required minlength="2">

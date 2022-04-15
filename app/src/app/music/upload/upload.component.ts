@@ -5,7 +5,7 @@ import { FileService } from 'src/app/core/services/file.service';
 import { FileUploader } from 'ng2-file-upload';
 import { ToastrService } from 'ngx-toastr';
 
-const URL = 'http://localhost:3030/data/catalog';
+// const URL = '/api/data/catalog';
 
 @Component({
   selector: 'app-upload',
@@ -13,22 +13,22 @@ const URL = 'http://localhost:3030/data/catalog';
   styleUrls: ['./upload.component.scss', "../../../../node_modules/ngx-toastr/toastr.css"]
 })
 export class UploadComponent implements OnInit {
-  public uploader: FileUploader = new FileUploader({
-    url: URL,
-    itemAlias: 'file',
-  });
+  // public uploader: FileUploader = new FileUploader({
+  //   url: URL,
+  //   itemAlias: 'file',
+  // });
 
   constructor(private fileService: FileService, private router: Router, private activatedRoute: ActivatedRoute, private toastr: ToastrService) { }
 
   ngOnInit(): void {
     // TODO attempt for implementing some library for uploading files
-    this.uploader.onAfterAddingFile = (file) => {
-      file.withCredentials = false;
-    };
-    this.uploader.onCompleteItem = (item: any, status: any) => {
-      console.log('Uploaded File Details:', item);
-      this.toastr.success('File successfully uploaded!');
-    };
+    // this.uploader.onAfterAddingFile = (file) => {
+    //   file.withCredentials = false;
+    // };
+    // this.uploader.onCompleteItem = (item: any, status: any) => {
+    //   console.log('Uploaded File Details:', item);
+    //   this.toastr.success('File successfully uploaded!');
+    // };
   }
 
   uploadSong(form: NgForm): void {

@@ -58,5 +58,7 @@ export class PlayerComponent {
       console.log(res);
     });
   }
-
+  isInPlaylist(id: any): boolean{
+    return true;
+  }
 }
