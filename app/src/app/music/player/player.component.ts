@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Observable, tap } from 'rxjs';
 import { UserService } from 'src/app/core/services/user.service';
 import { AudioService } from "../../core/services/audio.service";
 import { FileService } from '../../core/services/file.service';
@@ -58,7 +59,9 @@ export class PlayerComponent {
       console.log(res);
     });
   }
-  isInPlaylist(id: any): boolean{
-    return true;
+  isInPlaylist(id: any): Observable<boolean>{
+    console.log(' here')
+    return this.userService.inPlaylist(id);
   }
+
 }

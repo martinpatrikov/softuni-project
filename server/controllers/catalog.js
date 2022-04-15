@@ -1,17 +1,24 @@
 const router = require('express').Router();
 const api = require('../services/furniture');
-const { isAuth, isOwner } = require('../middlewares/guards');
+const {
+    isAuth,
+    isOwner
+} = require('../middlewares/guards');
 const mapErrors = require('../utils/mapper');
 const preload = require('../middlewares/preload');
 const mongoose = require('mongoose');
-const {Item }= require('../models/Item');
+const {
+    Item
+} = require('../models/Item');
 const multer = require('multer');
 const {
     GridFsStorage
 } = require('multer-gridfs-storage');
 const Grid = require('gridfs-stream');
 const fs = require('fs');
-const { FilesMeta } = require('../models/Item');
+const {
+    FilesMeta
+} = require('../models/Item');
 
 // Mongo URI
 const mongoURI = 'mongodb://localhost:27017/audioplayer';
@@ -42,7 +49,9 @@ const storage = new GridFsStorage({
     }
 });
 
-const upload = multer({ storage });
+const upload = multer({
+    storage
+});
 
 router.get('/', async (req, res) => {
     console.log(req.user);
@@ -54,7 +63,7 @@ router.get('/', async (req, res) => {
 router.post('/', isAuth(), upload.single('file'), async (req, res) => {
     // TODO The file is not received in the right format
     console.log('hjere')
-    console.log(req);
+    // console.log(rseq);
     const item = {
         name: req.body.name,
         artist: req.body.artist,
@@ -67,7 +76,9 @@ router.post('/', isAuth(), upload.single('file'), async (req, res) => {
     } catch (err) {
         console.error(err.message);
         const error = mapErrors(err);
-        res.status(400).json({ message: error });
+        res.status(400).json({
+            message: error
+        });
     }
 });
 
@@ -109,7 +120,9 @@ router.delete('/:id', preload(), isOwner(), async (req, res) => {
     } catch (err) {
         console.error(err.message);
         const error = mapErrors(err);
-        res.status(400).json({ message: error });
+        res.status(400).json({
+            message: error
+        });
     }
 });
 

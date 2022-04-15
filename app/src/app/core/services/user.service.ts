@@ -48,6 +48,9 @@ export class UserService {
 
   
   addToPlaylist(_id: string){
-    return this.http.post<any>(`/api/users/playlist`, {_id, user: sessionStorage.getItem('_id')});
+    return this.http.post<any>(`/api/users/playlist`, {_id});
+  }
+  inPlaylist(_id: string){
+    return this.http.post<any>(`/api/users/inPlaylist`, {_id});
   }
 }

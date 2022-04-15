@@ -10,7 +10,8 @@
           <mat-icon color="primary" mat-list-icon (click)="openFile(file, i)">music_note</mat-icon>
           <h4 mat-line>{{ file.name }}</h4>
           <h5 mat-line>by {{ file.artist }}</h5>
-          <button class="playlistBut" (click)="addToPlaylist(file._id)"> <p>Add To Playlist</p> </button>
+          {{(isInPlaylist(file._id) | async)}}
+          <button class="playlistBut" (click)="addToPlaylist(file._id)" [disabled]="(isInPlaylist(file._id) | async)"> <span *ngIf="!(isInPlaylist(file._id) | async)">Add To Playlist</span><span *ngIf="(isInPlaylist(file._id) | async)">Already In Playlist!</span> </button>
           <mat-icon color="primary" *ngIf="currentFile.index === i && !state?.error">volume_up</mat-icon>
           <h6 *ngIf="currentFile.index === i && state?.error">ERROR</h6>
           <mat-divider></mat-divider>
