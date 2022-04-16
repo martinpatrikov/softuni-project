@@ -54,6 +54,8 @@ const upload = multer({
     storage
 });
 
+let audio;
+
 router.get('/', async (req, res) => {
     try {
         let data = await api.getAll();
@@ -61,6 +63,8 @@ router.get('/', async (req, res) => {
             const user = await User.findById(req.user._id);
             // data = data.map(item => Object.assign({}, item, {isAdded: user.playlist.includes(item._id)}));
             data = data.map(item => Object.assign({}, item, { isAdded: user.playlist.includes(item._id) }));
+        }else{
+            data = data.map(item => Object.assign({}, item, { isAdded: false }));
         }
 
 
@@ -110,8 +114,11 @@ router.post('/', isAuth(), upload.single('file'), async (req, res) => {
 
 router.get('/:id', async (req, res) => {
     const id = req.params.id;
-    const item = await Item.findById(id).populate('file');
-    const file = await FilesMeta.findById(item.file._id);
+    // console.log(id)
+    // const item = await Item.findById(id).populate('file');
+    // console.log(item);
+    const file = await FilesMeta.findById(id);
+    console.log(file);
 
     const db = mongoose.connection;
     let bucket;
@@ -121,6 +128,17 @@ router.get('/:id', async (req, res) => {
 
     try {
         bucket.openDownloadStream(mongoose.Types.ObjectId(file._doc._id)).pipe(res);
+        audio = bucket.openDownloadStream(mongoose.Types.ObjectId(file._doc._id));
+        
+    } catch (err) {
+        console.log('bucket');
+        console.error(err);
+    }
+});
+
+router.get('/play', async (req, res) => {
+    try {
+        return audio;
     } catch (err) {
         console.log('bucket');
         console.error(err);

@@ -15,13 +15,11 @@ const routes: Routes = [
   {
     path: 'upload',
     canActivate: [AuthGuard],
-    pathMatch: 'full',
     component: UploadComponent
   },
   {
     path: 'playlist',
     canActivate: [AuthGuard],
-    pathMatch: 'full',
     component: PlaylistComponent
   },
   {
@@ -32,7 +30,7 @@ const routes: Routes = [
     path: 'error',
     component: ErrorComponent
   },
-  { path: '**', redirectTo: '' }
+  { path: '**', redirectTo: '/' }
 ];
 
 @NgModule({

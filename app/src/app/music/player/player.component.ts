@@ -12,6 +12,8 @@ import { StreamState } from '../../shared/interfaces/stream-state';
 })
 export class PlayerComponent {
 
+  url: string = 'http://localhost:3000/data/catalog/play';
+
   get isLogged(): boolean {
     return this.userService.isLogged;
   }
@@ -34,18 +36,20 @@ export class PlayerComponent {
     private router: Router
   ) {
     this.fileService.getFiles().subscribe((files: any) => { this.files = files });
-    
+
     this.audioService.getState().subscribe(state => {
       this.state = state;
     });
   }
-  openFile(file: any, index: any) {
-    this.currentFile = { index };
-    this.fileService.getFileByID(file._doc._id).subscribe((file: any) => { this.currentFile.file = file });
-    console.log(this.currentFile);
-    this.audioService.stop();
-    console.log('file' +file)
-    this.playStream(file.url);
+  openFile(file: any, index: number) {
+    this.fileService.getFileByID(file._doc._id).subscribe(e => {
+      const newFile = { ...e, url: this.url };
+      console.log(newFile)
+      this.currentFile = { index, newFile };
+      this.audioService.stop();
+      this.playStream(file.url);
+    })
+
   }
   onSliderChangeEnd(change: any) {
     this.audioService.seekTo(change.value);
