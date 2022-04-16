@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable, tap } from 'rxjs';
 import { UserService } from 'src/app/core/services/user.service';
 import { AudioService } from "../../core/services/audio.service";
@@ -26,9 +27,10 @@ export class PlayerComponent {
     private audioService: AudioService,
     private fileService: FileService,
     private userService: UserService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private router: Router
   ) {
-    this.fileService.getFiles().subscribe((files: any) => { this.files = files; console.log(files) });
+    this.fileService.getFiles().subscribe((files: any) => { this.files = files });
   }
 
 
@@ -38,7 +40,7 @@ export class PlayerComponent {
 
   openFile(file: any, index: any) {
     this.currentFile = { index };
-    this.fileService.getFileByID(file._id).subscribe((file: any) => {console.log(file); this.currentFile.file = file});
+    this.fileService.getFileByID(file._id).subscribe((file: any) => { console.log(file); this.currentFile.file = file });
     console.log(this.currentFile);
     this.audioService.stop();
     this.playStream(file.url);
@@ -55,10 +57,12 @@ export class PlayerComponent {
     });
   }
 
-  addToPlaylist(id: any): void{
+  addToPlaylist(id: any): void {
     this.userService.addToPlaylist(id).subscribe((res: any) => {
-      this.cdr.markForCheck();
-      console.log(res);
+      let currentUrl = this.router.url;
+      this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+      this.router.onSameUrlNavigation = 'reload';
+      this.router.navigate([currentUrl]);
     });
   }
 
