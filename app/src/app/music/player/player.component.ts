@@ -12,6 +12,10 @@ import { StreamState } from '../../shared/interfaces/stream-state';
 })
 export class PlayerComponent {
 
+  get isLogged(): boolean {
+    return this.userService.isLogged;
+  }
+
   files: Array<any> = [];
   state: StreamState | undefined;
   currentFile: any = {};

@@ -8,9 +8,9 @@
         <h3 mat-subheader>Songs</h3>
         <mat-list-item *ngFor="let file of files; let i = index" >
           <mat-icon color="primary" mat-list-icon (click)="openFile(file, i)">music_note</mat-icon>
-          <h4 mat-line>{{ file.name }}  {{file.isAdded}}</h4>
+          <h4 mat-line>{{ file.name }}</h4>
           <h5 mat-line>by {{ file.artist }}</h5>
-          <button class="playlistBut" (click)="addToPlaylist(file._id)" [disabled]="(file.isAdded)"> <span *ngIf="!(file.isAdded)">Add To Playlist</span><span *ngIf="(file.isAdded)">Already In Playlist!</span> </button>
+          <button class="playlistBut" *ngIf="isLogged" (click)="addToPlaylist(file._id)" [disabled]="(file.isAdded)"> <span *ngIf="!(file.isAdded)">Add To Playlist</span><span *ngIf="(file.isAdded)">Already In Playlist!</span> </button>
           <mat-icon color="primary" *ngIf="currentFile.index === i && !state?.error">volume_up</mat-icon>
           <h6 *ngIf="currentFile.index === i && state?.error">ERROR</h6>
           <mat-divider></mat-divider>
