@@ -54,14 +54,11 @@ const upload = multer({
     storage
 });
 
-let audio;
-
 router.get('/', async (req, res) => {
     try {
         let data = await api.getAll();
         if (req.user) {
             const user = await User.findById(req.user._id);
-            // data = data.map(item => Object.assign({}, item, {isAdded: user.playlist.includes(item._id)}));
             data = data.map(item => Object.assign({}, item, { isAdded: user.playlist.includes(item._id) }));
         }else{
             data = data.map(item => Object.assign({}, item, { isAdded: false }));

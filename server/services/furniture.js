@@ -14,7 +14,6 @@ async function create(item) {
 }
 
 async function getById(id) {
-    // console.log('here')
     const item = await Item.findById(id).populate('file');
 
     return item;

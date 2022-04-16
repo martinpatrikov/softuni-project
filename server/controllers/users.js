@@ -42,7 +42,6 @@ router.post('/playlist', auth(), async (req, res) => {
     user.playlist.push(req.body._id);
     await user.save();
     return res.status(201).json(user);
-    // console.log(req.body);
 });
 router.post('/inPlaylist', auth(), async (req, res) => {
     const user = await User.findById(req.user._id);
