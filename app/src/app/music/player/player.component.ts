@@ -12,8 +12,6 @@ import { StreamState } from '../../shared/interfaces/stream-state';
 })
 export class PlayerComponent {
 
-  url: string = 'http://localhost:3000/data/catalog/play';
-
   get isLogged(): boolean {
     return this.userService.isLogged;
   }
@@ -42,14 +40,9 @@ export class PlayerComponent {
     });
   }
   openFile(file: any, index: number) {
-    this.fileService.getFileByID(file._doc.file).subscribe(e => {
-      const newFile = { ...e, url: this.url };
-      console.log(newFile)
-      this.currentFile = { index, newFile };
-      this.audioService.stop();
-      this.playStream(file.url);
-    })
-
+    this.currentFile = { ...file, index };
+    const newFile = `http://localhost:3030/data/catalog/${file._doc.file}`;
+    this.playStream(newFile);
   }
   onSliderChangeEnd(change: any) {
     this.audioService.seekTo(change.value);

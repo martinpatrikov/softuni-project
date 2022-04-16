@@ -33,19 +33,33 @@ export class PlaylistComponent implements OnInit {
     
   }
 
-
-  openFile(file: any, index: any) {
-    this.currentFile = { index };
-    this.fileService.getFileByID(file._id).subscribe((file: any) => { console.log(file); this.currentFile.file = file });
-    console.log(this.currentFile);
-    this.audioService.stop();
-    this.playStream(file.url);
+  openFile(file: any, index: number) {
+    this.currentFile = { ...file, index };
+    const newFile = `http://localhost:3030/data/catalog/${file._id}`;
+    this.playStream(newFile);
   }
-  onSliderChangeEnd(a: any): void { }
-  previous(): void { }
-  play(): void { }
-  pause(): void { }
-  next(): void { }
+  onSliderChangeEnd(change: any) {
+    this.audioService.seekTo(change.value);
+  }
+  previous() {
+    const index = this.currentFile.index - 1;
+    const file = this.files[index];
+    this.openFile(file, index);
+  }
+  play() {
+    this.audioService.play();
+  }
+  pause() {
+    this.audioService.pause();
+  }
+  next() {
+    const index = this.currentFile.index + 1;
+    const file = this.files[index];
+    this.openFile(file, index);
+  }
+  stop() {
+    this.audioService.stop();
+  }
 
   playStream(url: any) {
     this.audioService.playStream(url).subscribe((events: any) => {

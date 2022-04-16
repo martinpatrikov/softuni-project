@@ -54,7 +54,6 @@ const upload = multer({
     storage
 });
 
-// TODO trying to save it here
 let audio;
 
 router.get('/', async (req, res) => {
@@ -79,7 +78,6 @@ router.get('/', async (req, res) => {
 router.get('/playlist', async (req, res) => {
     let data = await api.getAll();
     const user = await User.findById(req.user._id);
-    // data = data.map(item => Object.assign({}, item, {isAdded: user.playlist.includes(item._id)}));
     let result = [];
     data.forEach(item => {
         if (user.playlist.includes(item._id)) {
@@ -92,9 +90,6 @@ router.get('/playlist', async (req, res) => {
 
 
 router.post('/', isAuth(), upload.single('file'), async (req, res) => {
-    // TODO The file is not received in the right format
-    // console.log('hjere')
-    // console.log(rseq);
     const item = {
         name: req.body.name,
         artist: req.body.artist,
@@ -126,19 +121,7 @@ router.get('/:id', async (req, res) => {
 
     try {
         bucket.openDownloadStream(mongoose.Types.ObjectId(file._doc._id)).pipe(res);
-        // TODO trying to save it here
-        audio = bucket.openDownloadStream(mongoose.Types.ObjectId(file._doc._id));
         
-    } catch (err) {
-        console.log('bucket');
-        console.error(err);
-    }
-});
-
-// TODO trying to save it here
-router.get('/play', async (req, res) => {
-    try {
-        return audio;
     } catch (err) {
         console.log('bucket');
         console.error(err);

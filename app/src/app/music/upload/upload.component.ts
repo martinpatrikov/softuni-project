@@ -45,7 +45,6 @@ export class UploadComponent implements OnInit {
 		formData.append('artist', artist);
 
 		this.fileService.uploadFile(formData).subscribe({
-			// TODO make sure uploadFile receives the right format so that the back end can understand it
 			next: (val) => {
 				const redirectUrl = this.activatedRoute.snapshot.queryParams['redirectUrl'] || '/';
 				this.router.navigate([ redirectUrl ]);
@@ -54,13 +53,5 @@ export class UploadComponent implements OnInit {
 				console.log(err);
 			}
 		});
-		// this.fileService.saveTheme(form.value).subscribe({
-		//   next: () => {
-		//     this.router.navigate(['/themes']);
-		//   },
-		//   error: (err) => {
-		//     console.log(err);
-		//   }
-		// })
 	}
 }
