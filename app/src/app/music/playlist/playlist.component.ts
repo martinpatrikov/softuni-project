@@ -16,10 +16,11 @@ export class PlaylistComponent implements OnInit {
   currentFile: any = {};
 
   isFirstPlaying() {
-    return false;
+    return this.currentFile.index === 0;
   }
+
   isLastPlaying() {
-    return true;
+    return this.currentFile.index === this.files.length - 1;
   }
   constructor(
     private audioService: AudioService,
@@ -28,6 +29,9 @@ export class PlaylistComponent implements OnInit {
     private router: Router
   ) {
     this.fileService.getFilesInPlaylist().subscribe((files: any) => { this.files = files });
+    this.audioService.getState().subscribe(state => {
+      this.state = state;
+    });
   }
   ngOnInit(): void {
     
