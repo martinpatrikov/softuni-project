@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './core/guards/auth.guard';
 import { ErrorComponent } from './error/error.component';
 import { PlayerComponent } from './music/player/player.component';
 import { PlaylistComponent } from './music/playlist/playlist.component';
@@ -13,11 +14,13 @@ const routes: Routes = [
   },
   {
     path: 'upload',
+    canActivate: [AuthGuard],
     pathMatch: 'full',
     component: UploadComponent
   },
   {
     path: 'playlist',
+    canActivate: [AuthGuard],
     pathMatch: 'full',
     component: PlaylistComponent
   },
