@@ -55,15 +55,20 @@ const upload = multer({
 });
 
 router.get('/', async (req, res) => {
-    let data = await api.getAll();
-    if (req.user) {
-        const user = await User.findById(req.user._id);
-        // data = data.map(item => Object.assign({}, item, {isAdded: user.playlist.includes(item._id)}));
-        data = data.map(item => Object.assign({}, item, {isAdded: user.playlist.includes(item._id)}));
+    try {
+        let data = await api.getAll();
+        if (req.user) {
+            const user = await User.findById(req.user._id);
+            // data = data.map(item => Object.assign({}, item, {isAdded: user.playlist.includes(item._id)}));
+            data = data.map(item => Object.assign({}, item, { isAdded: user.playlist.includes(item._id) }));
+        }
+
+
+        res.json(data);
+    } catch (err) {
+        console.error(err);
     }
 
-
-    res.json(data);
 });
 
 router.get('/playlist', async (req, res) => {
@@ -113,11 +118,11 @@ router.get('/:id', async (req, res) => {
     bucket = new mongoose.mongo.GridFSBucket(db, {
         bucketName: 'uploads'
     });
-    console.log('file = ' + file._doc.filename);
 
     try {
         bucket.openDownloadStream(mongoose.Types.ObjectId(file._doc._id)).pipe(res);
     } catch (err) {
+        console.log('bucket');
         console.error(err);
     }
 });

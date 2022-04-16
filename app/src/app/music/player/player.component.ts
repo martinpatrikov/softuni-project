@@ -21,10 +21,11 @@ export class PlayerComponent {
   currentFile: any = {};
 
   isFirstPlaying() {
-    return false;
+    return this.currentFile.index === 0;
   }
+
   isLastPlaying() {
-    return true;
+    return this.currentFile.index === this.files.length - 1;
   }
   constructor(
     private audioService: AudioService,
@@ -40,17 +41,34 @@ export class PlayerComponent {
   }
   openFile(file: any, index: any) {
     this.currentFile = { index };
-    this.fileService.getFileByID(file._id).subscribe((file: any) => { console.log(file); this.currentFile.file = file });
+    this.fileService.getFileByID(file._doc._id).subscribe((file: any) => { this.currentFile.file = file });
     console.log(this.currentFile);
     this.audioService.stop();
-    console.log(file)
+    console.log('file' +file)
     this.playStream(file.url);
   }
-  onSliderChangeEnd(a: any): void { }
-  previous(): void { }
-  play(): void { }
-  pause(): void { }
-  next(): void { }
+  onSliderChangeEnd(change: any) {
+    this.audioService.seekTo(change.value);
+  }
+  previous() {
+    const index = this.currentFile.index - 1;
+    const file = this.files[index];
+    this.openFile(file, index);
+  }
+  play() {
+    this.audioService.play();
+  }
+  pause() {
+    this.audioService.pause();
+  }
+  next() {
+    const index = this.currentFile.index + 1;
+    const file = this.files[index];
+    this.openFile(file, index);
+  }
+  stop() {
+    this.audioService.stop();
+  }
 
   playStream(url: any) {
     this.audioService.playStream(url).subscribe((events: any) => {
