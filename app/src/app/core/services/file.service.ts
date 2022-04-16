@@ -11,7 +11,9 @@ export class FileService {
 
   getFiles(): Observable<any> {
     return this.http.get<any>('/api/data/catalog');
-
+  }
+  getFilesInPlaylist(): Observable<any> {
+    return this.http.get<any>('/api/data/catalog/playlist');
   }
   getFileByID(id: string): Observable<any> {
     return this.http.get<any>(`/api/data/catalog/${id}`);

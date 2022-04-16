@@ -55,13 +55,26 @@ const upload = multer({
 });
 
 router.get('/', async (req, res) => {
-    // console.log(req.user);
     let data = await api.getAll();
     const user = await User.findById(req.user._id);
     // data = data.map(item => Object.assign({}, item, {isAdded: user.playlist.includes(item._id)}));
     data = data.map(item => ({ file: item.file, artist: item.artist, name: item.name, _id: item._id, isAdded: user.playlist.includes(item._id) }));
 
     res.json(data);
+});
+
+router.get('/playlist', async (req, res) => {
+    let data = await api.getAll();
+    const user = await User.findById(req.user._id);
+    // data = data.map(item => Object.assign({}, item, {isAdded: user.playlist.includes(item._id)}));
+    let result = [];
+    data.forEach(item => {
+        if(user.playlist.includes(item._id)){
+            result.push(item);
+        }
+    });
+
+    res.json(result);
 });
 
 

@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
 import { FileUploadModule } from 'ng2-file-upload';
 import { CoreModule } from '../core/core.module';
+import { PlaylistComponent } from './playlist/playlist.component';
 
 
 

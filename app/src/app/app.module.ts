@@ -16,11 +16,13 @@ import { UploadComponent } from './music/upload/upload.component';
 import { MusicModule } from './music/music.module';
 import { ToastrModule } from 'ngx-toastr';
 import { FileUploadModule } from 'ng2-file-upload';
+import { PlaylistComponent } from './music/playlist/playlist.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PlayerComponent,
+    PlaylistComponent,
     ErrorComponent,
     UploadComponent
   ],

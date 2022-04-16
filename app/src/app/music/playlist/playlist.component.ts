@@ -1,17 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AudioService } from 'src/app/core/services/audio.service';
+import { FileService } from 'src/app/core/services/file.service';
 import { UserService } from 'src/app/core/services/user.service';
-import { AudioService } from "../../core/services/audio.service";
-import { FileService } from '../../core/services/file.service';
-import { StreamState } from '../../shared/interfaces/stream-state';
+import { StreamState } from 'src/app/shared/interfaces/stream-state';
 
 @Component({
-  selector: 'app-player',
-  templateUrl: './player.component.html',
-  styleUrls: ['./player.component.scss']
+  selector: 'app-playlist',
+  templateUrl: './playlist.component.html',
+  styleUrls: ['./playlist.component.scss']
 })
-export class PlayerComponent {
-
+export class PlaylistComponent implements OnInit {
   files: Array<any> = [];
   state: StreamState | undefined;
   currentFile: any = {};
@@ -28,13 +27,12 @@ export class PlayerComponent {
     private userService: UserService,
     private router: Router
   ) {
-    this.fileService.getFiles().subscribe((files: any) => { this.files = files });
+    this.fileService.getFilesInPlaylist().subscribe((files: any) => { this.files = files });
+  }
+  ngOnInit(): void {
+    
   }
 
-
-  // this.fileService.getFiles().subscribe((files: any) => {
-  //   this.filesI = files;
-  // });
 
   openFile(file: any, index: any) {
     this.currentFile = { index };
@@ -63,5 +61,4 @@ export class PlayerComponent {
       this.router.navigate([currentUrl]);
     });
   }
-
 }

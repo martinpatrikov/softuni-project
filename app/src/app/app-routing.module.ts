@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ErrorComponent } from './error/error.component';
 import { PlayerComponent } from './music/player/player.component';
+import { PlaylistComponent } from './music/playlist/playlist.component';
 import { UploadComponent } from './music/upload/upload.component';
 
 const routes: Routes = [
@@ -14,6 +15,11 @@ const routes: Routes = [
     path: 'upload',
     pathMatch: 'full',
     component: UploadComponent
+  },
+  {
+    path: 'playlist',
+    pathMatch: 'full',
+    component: PlaylistComponent
   },
   {
     path: 'user',
