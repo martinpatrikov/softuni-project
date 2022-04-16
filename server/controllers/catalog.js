@@ -54,6 +54,7 @@ const upload = multer({
     storage
 });
 
+// TODO trying to save it here
 let audio;
 
 router.get('/', async (req, res) => {
@@ -128,6 +129,7 @@ router.get('/:id', async (req, res) => {
 
     try {
         bucket.openDownloadStream(mongoose.Types.ObjectId(file._doc._id)).pipe(res);
+        // TODO trying to save it here
         audio = bucket.openDownloadStream(mongoose.Types.ObjectId(file._doc._id));
         
     } catch (err) {
@@ -136,6 +138,7 @@ router.get('/:id', async (req, res) => {
     }
 });
 
+// TODO trying to save it here
 router.get('/play', async (req, res) => {
     try {
         return audio;
