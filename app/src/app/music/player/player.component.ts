@@ -33,18 +33,17 @@ export class PlayerComponent {
     private router: Router
   ) {
     this.fileService.getFiles().subscribe((files: any) => { this.files = files });
+    
+    this.audioService.getState().subscribe(state => {
+      this.state = state;
+    });
   }
-
-
-  // this.fileService.getFiles().subscribe((files: any) => {
-  //   this.filesI = files;
-  // });
-
   openFile(file: any, index: any) {
     this.currentFile = { index };
     this.fileService.getFileByID(file._id).subscribe((file: any) => { console.log(file); this.currentFile.file = file });
     console.log(this.currentFile);
     this.audioService.stop();
+    console.log(file)
     this.playStream(file.url);
   }
   onSliderChangeEnd(a: any): void { }

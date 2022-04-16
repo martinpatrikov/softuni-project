@@ -59,7 +59,7 @@ router.get('/', async (req, res) => {
     if (req.user) {
         const user = await User.findById(req.user._id);
         // data = data.map(item => Object.assign({}, item, {isAdded: user.playlist.includes(item._id)}));
-        data = data.map(item => ({ file: item.file, artist: item.artist, name: item.name, _id: item._id, isAdded: user.playlist.includes(item._id) }));
+        data = data.map(item => Object.assign({}, item, {isAdded: user.playlist.includes(item._id)}));
     }
 
 
