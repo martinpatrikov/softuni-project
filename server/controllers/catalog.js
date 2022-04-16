@@ -115,9 +115,6 @@ router.post('/', isAuth(), upload.single('file'), async (req, res) => {
 
 router.get('/:id', async (req, res) => {
     const id = req.params.id;
-    // console.log(id)
-    // const item = await Item.findById(id).populate('file');
-    // console.log(item);
     const file = await FilesMeta.findById(id);
     console.log(file);
 

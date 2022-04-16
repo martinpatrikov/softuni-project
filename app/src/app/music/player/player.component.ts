@@ -42,7 +42,7 @@ export class PlayerComponent {
     });
   }
   openFile(file: any, index: number) {
-    this.fileService.getFileByID(file._doc._id).subscribe(e => {
+    this.fileService.getFileByID(file._doc.file).subscribe(e => {
       const newFile = { ...e, url: this.url };
       console.log(newFile)
       this.currentFile = { index, newFile };
