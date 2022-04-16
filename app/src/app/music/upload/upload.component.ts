@@ -2,15 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FileService } from 'src/app/core/services/file.service';
-import { FileUploader } from 'ng2-file-upload';
-import { ToastrService } from 'ngx-toastr';
 
 // const URL = '/api/data/catalog';
 
 @Component({
 	selector: 'app-upload',
 	templateUrl: './upload.component.html',
-	styleUrls: [ './upload.component.scss', '../../../../node_modules/ngx-toastr/toastr.css' ]
+	styleUrls: [ './upload.component.scss' ]
 })
 export class UploadComponent implements OnInit {
 	// public uploader: FileUploader = new FileUploader({
@@ -22,19 +20,10 @@ export class UploadComponent implements OnInit {
 	constructor(
 		private fileService: FileService,
 		private router: Router,
-		private activatedRoute: ActivatedRoute,
-		private toastr: ToastrService
+		private activatedRoute: ActivatedRoute
 	) {}
 
 	ngOnInit(): void {
-		// TODO attempt for implementing some library for uploading files
-		// this.uploader.onAfterAddingFile = (file) => {
-		//   file.withCredentials = false;
-		// };
-		// this.uploader.onCompleteItem = (item: any, status: any) => {
-		//   console.log('Uploaded File Details:', item);
-		//   this.toastr.success('File successfully uploaded!');
-		// };
 	}
 
 	onChange(e: Event) {

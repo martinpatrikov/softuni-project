@@ -12,8 +12,7 @@ export class AuthGuard implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
     const { authenticationRequired, authenticationFailureRedirectUrl } = route.data;
     if (
-      typeof authenticationRequired === 'boolean' &&
-      authenticationRequired === this.userService.isLogged
+      this.userService.isLogged
     ) { return true; }
 
     let authRedirectUrl = authenticationFailureRedirectUrl
