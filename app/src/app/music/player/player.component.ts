@@ -39,6 +39,7 @@ export class PlayerComponent {
       this.state = state;
     });
   }
+  // TODO add file interface
   openFile(file: any, index: number) {
     this.currentFile = { ...file, index };
     const newFile = `http://localhost:3030/data/catalog/${file._doc.file}`;
@@ -67,12 +68,14 @@ export class PlayerComponent {
     this.audioService.stop();
   }
 
+  // TODO chnage any
   playStream(url: any) {
     this.audioService.playStream(url).subscribe((events: any) => {
       // listening for fun here
     });
   }
 
+  // TODO chnage any
   addToPlaylist(id: any): void {
     this.userService.addToPlaylist(id).subscribe((res: any) => {
       let currentUrl = this.router.url;
@@ -82,4 +85,8 @@ export class PlayerComponent {
     });
   }
 
+  // TODO add file interface
+  openEdit(file: any){
+    this.router.navigate(['/modify', file._doc._id]);
+  }
 }

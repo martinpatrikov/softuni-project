@@ -15,6 +15,7 @@ import { ErrorComponent } from './error/error.component';
 import { UploadComponent } from './music/upload/upload.component';
 import { MusicModule } from './music/music.module';
 import { PlaylistComponent } from './music/playlist/playlist.component';
+import { ModifyModule } from './modify/modify.module';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { PlaylistComponent } from './music/playlist/playlist.component';
     SharedModule,
     HttpClientModule,
     FontAwesomeModule,
-    MusicModule
+    MusicModule,
+    ModifyModule
   ],
   providers: [],
   bootstrap: [

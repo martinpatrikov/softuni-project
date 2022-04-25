@@ -23,6 +23,10 @@ const routes: Routes = [
     component: PlaylistComponent
   },
   {
+    path: 'modify',
+    loadChildren: () => import('./modify/modify.module').then(m => m.ModifyModule)
+  },
+  {
     path: 'user',
     loadChildren: () => import('./user/user.module').then(m => m.UserModule)
   },
