@@ -1,1 +1,45 @@
-<p>edit works!</p>
+<div class="container">
+    <div class="new-theme-border">
+        <div class="header-background">
+            <span>New Song</span>
+        </div>
+        <form #form="ngForm" method="post" enctype='multipart/form-data' (ngSubmit)="uploadSong(form)">
+            <div class="new-theme-title">
+                <label for="themeName">Song Name: </label>
+                <input #nameInput="ngModel" ngModel type="text" name="name" id="name" required minlength="2">
+                <ng-container *ngIf="nameInput.touched">
+                    <p class="error" *ngIf="nameInput.errors?.required">
+                        Theme name is required.
+                    </p>
+                    <p class="error" *ngIf="nameInput.errors?.minlength">
+                        Theme name must be at least 2 characters long.
+                    </p>
+                </ng-container>
+            </div>
+            <div class="new-theme-title">
+                <label for="themeName">Artist: </label>
+                <input #artistInput="ngModel" ngModel type="text" name="artist" id="artist" required minlength="3">
+                <ng-container *ngIf="artistInput.touched">
+                    <p class="error" *ngIf="artistInput.errors?.required">
+                        Theme artist is required.
+                    </p>
+                    <p class="error" *ngIf="artistInput.errors?.minlength">
+                        Theme artist must be at least 3 characters long.
+                    </p>
+                </ng-container>
+            </div>
+            <div class="new-theme-content">
+                <label for="postText">File: </label>
+                <input #fileInput="ngModel" ngModel type="file" id="file" name="file" accept="audio/*" (change)="onChange($event)" required>
+                <!-- <p class="error" *ngIf="fileInput.touched && nameInput.errors?.required">
+                    The file upload is required.
+                </p> -->
+            </div>
+            <div class="new-theme-buttons">
+                <button type="button" routerLink="/" class="cancel">Cancel</button>
+                <button class="public">Post</button>
+            </div>
+
+        </form>
+    </div>
+</div>
