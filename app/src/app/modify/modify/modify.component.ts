@@ -16,7 +16,8 @@ export class ModifyComponent implements OnInit {
 		private activatedRoute: ActivatedRoute
 	) {
     
-    this.fileService.getItemByID(this.activatedRoute.snapshot.params.id).subscribe((item: any) => { this.item = item; console.log(item) });
+    this.fileService.
+    getItemByID(this.activatedRoute.snapshot.params.id).subscribe((item: any) => { this.item = item; console.log(item) });
     
   }
 
@@ -28,6 +29,9 @@ export class ModifyComponent implements OnInit {
 			return;
 		}
 		const { name, artist } = form.value;
+    this.fileService.putItemByID(this.item._id, { name, artist }).subscribe(() => {
+      this.router.navigate(['/']);
+    });
   }
   onChange(e: any){
 

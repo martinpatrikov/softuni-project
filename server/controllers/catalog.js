@@ -90,7 +90,8 @@ router.post('/', isAuth(), upload.single('file'), async (req, res) => {
     const item = {
         name: req.body.name,
         artist: req.body.artist,
-        file: req.file.id
+        file: req.file.id,
+        ownerId: req.user._id
     };
 
     try {
@@ -110,16 +111,11 @@ router.get('/item/:id', preload(), async (req, res) => {
     res.json(item);
 });
 
-router.put('/item/:id', preload(), isOwner(), async (req, res) => {
+router.patch('/item/:id', preload(), isOwner(), async (req, res) => {
     const itemId = req.params.id;
     const item = {
-        make: req.body.make,
-        model: req.body.model,
-        year: req.body.year,
-        description: req.body.description,
-        price: req.body.price,
-        img: req.body.img,
-        material: req.body.material
+        artist: req.body.artist,
+        name: req.body.name
     };
 
     try {

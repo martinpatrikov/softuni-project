@@ -23,13 +23,8 @@ async function getById(id) {
 async function update(id, item) {
     const existing = await Item.findById(id);
 
-    existing.make = item.make;
-    existing.model = item.model;
-    existing.year = item.year;
-    existing.description = item.description;
-    existing.price = item.price;
-    existing.img = item.img;
-    existing.material = item.material;
+    existing.artist = item.artist;
+    existing.name = item.name;
 
     await existing.save();
 

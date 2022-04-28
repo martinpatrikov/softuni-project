@@ -20,7 +20,7 @@ function isGuest() {
 
 function isOwner() {
     return (req, res, next) => {
-        if (req.user && req.user._id == res.locals.item.owner) {
+        if (req.user && req.user._id == res.locals.item.ownerId) {
             next();
         } else {
             res.status(403).json({ message: 'You cannot modify this record'});
