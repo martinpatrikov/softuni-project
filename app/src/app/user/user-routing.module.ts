@@ -7,7 +7,6 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
-    // canActivate: [AuthActivate],
     data: {
       authenticationRequired: false,
       authenticationFailureRedirectUrl: '/',
@@ -16,7 +15,6 @@ const routes: Routes = [
   {
     path: 'register',
     component: RegisterComponent,
-    // canActivate: [AuthActivate],
     data: {
       authenticationRequired: false,
       authenticationFailureRedirectUrl: '/',

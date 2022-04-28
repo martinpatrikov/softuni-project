@@ -14,8 +14,7 @@ import { CoreModule } from '../core/core.module';
   imports: [
     CommonModule,
     ModifyRoutingModule,
-    FormsModule,
-    // CoreModule
+    FormsModule
   ]
 })
 export class ModifyModule { }

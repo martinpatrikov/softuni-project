@@ -8,16 +8,7 @@ const routes: Routes = [
     path: ':id',
     component: ModifyComponent,
     canActivate: [AuthGuard]
-  },
-  // {
-  //   path: 'delete',
-  //   component: RegisterComponent,
-  //   // canActivate: [AuthActivate],
-  //   data: {
-  //     authenticationRequired: false,
-  //     authenticationFailureRedirectUrl: '/',
-  //   }
-  // }
+  }
 ];
 
 @NgModule({

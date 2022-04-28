@@ -43,9 +43,7 @@ async function start() {
         console.log('bucket created');
     });
 
-    // mongoose.model('FileMeta', new mongoose.Schema({}, {
-    //     collection: 'uploads.files',
-    // }));
+
     
     const app = express();
 

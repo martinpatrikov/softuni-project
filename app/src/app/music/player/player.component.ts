@@ -75,8 +75,7 @@ export class PlayerComponent {
     });
   }
 
-  // TODO chnage any
-  addToPlaylist(id: any): void {
+  addToPlaylist(id: string): void {
     this.userService.addToPlaylist(id).subscribe((res: any) => {
       let currentUrl = this.router.url;
       this.router.routeReuseStrategy.shouldReuseRoute = () => false;
@@ -85,7 +84,6 @@ export class PlayerComponent {
     });
   }
 
-  // TODO add file interface
   openEdit(file: any){
     this.router.navigate(['/modify', file._doc._id]);
   }

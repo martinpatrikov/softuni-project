@@ -3,7 +3,6 @@ import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FileService } from 'src/app/core/services/file.service';
 
-// const URL = '/api/data/catalog';
 
 @Component({
 	selector: 'app-upload',
@@ -11,10 +10,6 @@ import { FileService } from 'src/app/core/services/file.service';
 	styleUrls: [ './upload.component.scss' ]
 })
 export class UploadComponent implements OnInit {
-	// public uploader: FileUploader = new FileUploader({
-	//   url: URL,
-	//   itemAlias: 'file',
-	// });
 	file: File | undefined;
 
 	constructor(
