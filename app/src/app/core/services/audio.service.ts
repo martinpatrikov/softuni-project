@@ -78,11 +78,29 @@ export class AudioService {
   }
 
   seekTo(seconds: number) {
-    this.audioObj.currentTime = seconds;
+    console.log(this.audioObj.currentTime);
+    console.log(seconds);
+    this.audioObj.onprogress = () => {
+      console.log('here')
+      this.audioObj.currentTime = seconds;
+    };
+    // this.audioObj.currentTime = seconds;
+    console.log(this.audioObj.currentTime);
   }
 
   formatTime(time: number, format: string = "HH:mm:ss") {
+    // console.log('time' + time);
+    let duration: string;
+    let s: any = Math.trunc( time % 60);
+    let m = Math.trunc( (time / 60) % 60);
+    if (s < 10) {
+      s = "0" + s;
+    }
+    duration = m + ':' + s ;
     const momentTime = time * 1000;
+    // console.log('momentTime' + momentTime.toString('mm:ss'));
+    // console.log(moment.utc(momentTime).format(format) + 'vs' + duration);
+    return duration
     return moment.utc(momentTime).format(format);
   }
 

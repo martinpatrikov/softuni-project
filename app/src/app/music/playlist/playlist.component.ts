@@ -39,7 +39,7 @@ export class PlaylistComponent implements OnInit {
 
   openFile(file: any, index: number) {
     this.currentFile = { ...file, index };
-    const newFile = `http://localhost:3030/data/catalog/${file._id}`;
+    const newFile = `http://localhost:3030/data/catalog/${file._doc.file}`;
     this.playStream(newFile);
   }
   onSliderChangeEnd(change: any) {

@@ -60,11 +60,11 @@ router.get('/', async (req, res) => {
         if (req.user) {
             const user = await User.findById(req.user._id);
             data = data.map(item => Object.assign({}, item, { isAdded: user.playlist.includes(item._id) }));
-        }else{
+        } else {
             data = data.map(item => Object.assign({}, item, { isAdded: false }));
         }
 
-
+        // console.log('data start' +JSON.stringify(data[0])+ 'data end');	
         res.json(data);
     } catch (err) {
         console.error(err);
@@ -73,16 +73,22 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/playlist', async (req, res) => {
-    let data = await api.getAll();
-    const user = await User.findById(req.user._id);
-    let result = [];
-    data.forEach(item => {
-        if (user.playlist.includes(item._id)) {
-            result.push(item);
-        }
-    });
+    try {
+        let data = await api.getAll();
+        const user = await User.findById(req.user._id);
+        let result = [];
+        data.forEach(item => {
+            if (user.playlist.includes(item._id)) {
+                result.push(Object.assign({}, item));
+            }
+        });
+        // console.log('result start' +JSON.stringify(result[0]) + 'result end');
+        res.json(result);
+    } catch (err) {
+        console.error('get playlist error' + err);
+    }
 
-    res.json(result);
+    
 });
 
 
@@ -154,7 +160,7 @@ router.get('/:id', async (req, res) => {
 
     try {
         bucket.openDownloadStream(mongoose.Types.ObjectId(file._doc._id)).pipe(res);
-        
+
     } catch (err) {
         console.log('bucket');
         console.error(err);
