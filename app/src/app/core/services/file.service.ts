@@ -24,6 +24,9 @@ export class FileService {
   putItemByID(id: string, formData: any): Observable<any> {
     return this.http.patch<any>(`/api/data/catalog/item/${id}`, formData);
   }
+  deleteItemByID(id: string): Observable<any> {
+    return this.http.delete<any>(`/api/data/catalog/item/${id}`);
+  }
   uploadFile(formData: any): Observable<any> {
     return this.http.post<any>('/api/data/catalog', formData);
   }

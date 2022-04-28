@@ -127,6 +127,19 @@ router.patch('/item/:id', preload(), isOwner(), async (req, res) => {
         res.status(400).json({ message: error });
     }
 });
+router.delete('/item/:id', preload(), isOwner(), async (req, res) => {
+    try {
+        const itemId = req.params.id;
+        await api.deleteById(itemId);
+        res.status(204).end();
+    } catch (err) {
+        console.error(err.message);
+        const error = mapErrors(err);
+        res.status(400).json({
+            message: error
+        });
+    }
+});
 
 router.get('/:id', async (req, res) => {
     const id = req.params.id;
@@ -148,18 +161,6 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-router.delete('/:id', preload(), isOwner(), async (req, res) => {
-    try {
-        const itemId = req.params.id;
-        await api.deleteById(itemId);
-        res.status(204).end();
-    } catch (err) {
-        console.error(err.message);
-        const error = mapErrors(err);
-        res.status(400).json({
-            message: error
-        });
-    }
-});
+
 
 module.exports = router;

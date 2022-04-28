@@ -33,8 +33,10 @@ export class ModifyComponent implements OnInit {
       this.router.navigate(['/']);
     });
   }
-  onChange(e: any){
-
+  onDelete(id: string){
+    this.fileService.deleteItemByID(id).subscribe(() => {
+      this.router.navigate(['/']);
+    });
   }
 
 }
